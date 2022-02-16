@@ -1,38 +1,45 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-//declare global vectors
+//global
+bool used[100000];
+int components[100000];
+std::vector<int> list[100000];
 
 void DFS(int peak){
-
+    used[peak] = true;
+    for (int i = 0; i < list[peak].size(); ++i) {
+        int nextToBeReviewed = list[peak][i];
+        if(!used[nextToBeReviewed]){
+            components[nextToBeReviewed] = components[peak];
+            DFS(nextToBeReviewed);
+        }
+    }
 }
-
-
 
 int main() {
     std::ifstream in("components.in");
     std::ofstream out("components.out");
     int n, m;
+    int counter = 0;
     in >> n >> m;
-    std::vector<std::vector<int>> list;
-    std::vector<int>  points;
-    list.resize(n);
-    for (int i = 0; i < n; ++i) {
-        list.push_back(points);
-    }
     int roadA, roadB;
     for (int i = 0; i < m; ++i) {
         in >> roadA >> roadB;
-        list[roadA - 1].push_back(roadB);
-        list[roadB - 1].push_back(roadA);
+        list[roadA - 1].push_back(roadB-1);
+        list[roadB - 1].push_back(roadA-1);
     }
-////test output
-//    for (int i = 0; i < list.size(); ++i) {
-//        for (int j = 0; j < list[i].size(); ++j) {
-//            std::cout << list[i][j] << " ";
-//        }
-//        std::cout << std::endl;
-//    }
+    for (int i = 0; i < n; ++i) {
+        if(!used[i]){
+            counter++;
+            components[i] = counter;
+            DFS(i);
+        }
+    }
+    out << counter << std::endl;
+    for (int component : components)
+        if(component!=0)
+        out<<component << " ";
 
     return 0;
 }
