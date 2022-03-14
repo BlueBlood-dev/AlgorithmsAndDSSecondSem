@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/cygdrive/d/GitClone/algs-2-sem/2lab/taskA/main.cpp
+iostream
+-
+fstream
+-
+vector
+-
+algorithm
+-
+
